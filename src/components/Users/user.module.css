@@ -1,0 +1,57 @@
+.users {
+    margin: 15px;
+}
+.common {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-top: 15px;
+    background-color: #656262;
+}
+
+.photo {
+    margin-right: 20px;
+    display: block;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    overflow: hidden;
+    align-self: center;
+}
+.photo img {
+    width: 100%;
+    display: block;
+}
+
+.left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.left button {
+    margin-top: 10px;
+    width: 100px;
+    order: 1;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.followAndDescription {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.selected {
+    font-weight: bold;
+}
+
+

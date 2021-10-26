@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.formControl.error textarea,
+.formControl.error input {
+    border: solid 4px red;
+
+}
+.formControl.error span {
+    color: #9c1717;
+    font-weight: bold;
+}
+
+.comonError {
+    border: solid 4px red;
+}
