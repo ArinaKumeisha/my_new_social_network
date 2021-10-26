@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/my_new_social_network/static/css/main.c30d8fe9.chunk.css",
+    "main.js": "/my_new_social_network/static/js/main.f453f25c.chunk.js",
+    "main.js.map": "/my_new_social_network/static/js/main.f453f25c.chunk.js.map",
+    "runtime-main.js": "/my_new_social_network/static/js/runtime-main.1c45fbad.js",
+    "runtime-main.js.map": "/my_new_social_network/static/js/runtime-main.1c45fbad.js.map",
+    "static/js/2.4f336c50.chunk.js": "/my_new_social_network/static/js/2.4f336c50.chunk.js",
+    "static/js/2.4f336c50.chunk.js.map": "/my_new_social_network/static/js/2.4f336c50.chunk.js.map",
+    "static/css/3.1182fa56.chunk.css": "/my_new_social_network/static/css/3.1182fa56.chunk.css",
+    "static/js/3.ae00679f.chunk.js": "/my_new_social_network/static/js/3.ae00679f.chunk.js",
+    "static/js/3.ae00679f.chunk.js.map": "/my_new_social_network/static/js/3.ae00679f.chunk.js.map",
+    "static/css/4.54fe10b1.chunk.css": "/my_new_social_network/static/css/4.54fe10b1.chunk.css",
+    "static/js/4.985869d0.chunk.js": "/my_new_social_network/static/js/4.985869d0.chunk.js",
+    "static/js/4.985869d0.chunk.js.map": "/my_new_social_network/static/js/4.985869d0.chunk.js.map",
+    "index.html": "/my_new_social_network/index.html",
+    "static/css/3.1182fa56.chunk.css.map": "/my_new_social_network/static/css/3.1182fa56.chunk.css.map",
+    "static/css/4.54fe10b1.chunk.css.map": "/my_new_social_network/static/css/4.54fe10b1.chunk.css.map",
+    "static/css/main.c30d8fe9.chunk.css.map": "/my_new_social_network/static/css/main.c30d8fe9.chunk.css.map",
+    "static/js/2.4f336c50.chunk.js.LICENSE.txt": "/my_new_social_network/static/js/2.4f336c50.chunk.js.LICENSE.txt",
+    "static/media/arina.6c58204d.jpg": "/my_new_social_network/static/media/arina.6c58204d.jpg",
+    "static/media/avatar.png": "/my_new_social_network/static/media/avatar.7bdf7b93.png",
+    "static/media/city.68b57ad7.jpg": "/my_new_social_network/static/media/city.68b57ad7.jpg",
+    "static/media/prelo.d7190a4c.webp": "/my_new_social_network/static/media/prelo.d7190a4c.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1c45fbad.js",
+    "static/js/2.4f336c50.chunk.js",
+    "static/css/main.c30d8fe9.chunk.css",
+    "static/js/main.f453f25c.chunk.js"
+  ]
+}
