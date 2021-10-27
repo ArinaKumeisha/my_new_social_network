@@ -17,6 +17,8 @@ export type ProfileType = {
     profile: ProfilesType | null
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (photos: PhotosType) => void
 }
 export type PhotosType = {
     small: string | null

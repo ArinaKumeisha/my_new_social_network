@@ -1,5 +1,5 @@
-import axios from "axios";
-import {ProfilesType, UserType} from "../types/types";
+import {PhotosType, ProfilesType, UserType} from "../types/types";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -20,6 +20,8 @@ export type CommonType<T={}> = {
     messages: string[],
     data: T
 }
+
+
 export type AuthMeType= {
     id: string
     email: string
@@ -63,6 +65,15 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put<CommonType>(`profile/status`, {status: status})
+    },
+    savePhoto(photoFile: any) {
+        let formData = new FormData();
+        formData.append('image', photoFile);
+       return instance.put<CommonType<{photos:PhotosType }>>(`profile/photo`,formData,  {
+           headers: {
+               'Content-Type': 'multipart/form-data'
+           }
+       })
     }
 }
 

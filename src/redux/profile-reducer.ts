@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
-import {PostsType, ProfilesType} from "../types/types";
+import {PhotosType, PostsType, ProfilesType} from "../types/types";
 
 export enum ACTION_TYPE {
     ADD_POST = "PROFILE/ADD-POST",
@@ -17,7 +17,7 @@ export enum ACTION_TYPE {
     TOGGLE_IS_FOLLOWING_PROGRESS = "USERS/TOGGLE-IS_FOLLOWING-PROGRESS",
     GET_USER_DATA_SUCCESS = "AUTH/ACTION_TYPE.GET_USER_DATA_SUCCESS",
     INITIALIZED_SUCCESS = "APP/INITIALIZED-SUCCESS",
-
+    SAVE_PHOTO = "PROFILE/SAVE-PHOTO"
 }
 
 
@@ -25,8 +25,8 @@ export type ProfileActionType =
     AddPostAT |
     setUserProfileSuccessAT |
     SetStatusAT |
-    PhotosType |
-    DeletePostAT
+    DeletePostAT |
+    SavePhotoAT
 
 export type InitialStateType = typeof initialState
 
@@ -48,7 +48,6 @@ let initialState = {
             img: "https://www.fotoprizer.ru/img_inf/st_221.jpg"
         },
     ] as Array<PostsType>,
-    isPhoto: false
 }
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionType): InitialStateType => {
     switch (action.type) {
@@ -76,12 +75,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
                 ...state,
                 profile: action.profile
             }
-
-        case 'SET-PHOTO': {
-            return {
-                ...state, isPhoto: action.isPhoto
+        case ACTION_TYPE.SAVE_PHOTO:
+            if (state.profile) {
+                return {...state, profile: {...state.profile, photos: action.photos}}
             }
-        }
+            return {...state}
+
         default:
             return state
     }
@@ -119,36 +118,32 @@ export const setStatusAC = (status: string): SetStatusAT => {
         status,
     } as const
 }
-export const setUserProfileSuccess = (profile: ProfilesType | null) => {
+export const setUserProfileSuccess = (profile: ProfilesType) => {
     return {
         type: ACTION_TYPE.SET_USER_PROFILE_SUCCESS,
         profile,
     } as const
 }
-export type PhotosType = ReturnType<typeof setPhoto>
-export const setPhoto = (isPhoto: boolean) => {
+
+export const getUserStatus = (userId: string) => async (dispatch: Dispatch<ProfileActionType>) => {
+    try {
+        const response = await profileAPI.getStatus(userId)
+        dispatch(setStatusAC(response.data))
+    } catch (e) {
+        throw  Error
+    }
+}
+export type SavePhotoAT = ReturnType<typeof savePhotoAC>
+export const savePhotoAC = (photos: PhotosType) => {
     return {
-        type: 'SET-PHOTO',
-        isPhoto,
+        type: ACTION_TYPE.SAVE_PHOTO,
+        photos,
     } as const
 }
 export const setUserProfile = (userId: string) => async (dispatch: Dispatch<ProfileActionType>) => {
     try {
         const response = await profileAPI.getUserProfile(userId)
         dispatch(setUserProfileSuccess(response.data))
-        if (response.data.userId === 18320) {
-            dispatch(setPhoto(true))
-        } else {
-            dispatch(setPhoto(false))
-        }
-    } catch (e) {
-        throw  Error
-    }
-}
-export const getUserStatus = (userId: string) => async (dispatch: Dispatch<ProfileActionType>) => {
-    try {
-        const response = await profileAPI.getStatus(userId)
-        dispatch(setStatusAC(response.data))
     } catch (e) {
         throw  Error
     }
@@ -165,6 +160,20 @@ export const updateStatus = (status: string) => {
         }
     }
 }
+export const savePhoto = (photos: PhotosType) => {
+    return async (dispatch: Dispatch<ProfileActionType>) => {
+        try {
+            const response = await profileAPI.savePhoto(photos)
+            if (response.data.resultCode === 0) {
+                dispatch(savePhotoAC(response.data.data.photos))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+
 
 
 
