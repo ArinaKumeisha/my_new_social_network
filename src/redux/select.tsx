@@ -28,6 +28,9 @@ export const getPosts = (state: AppStateType) => {
 export const getUsers = (state: AppStateType) => {
     return state.usersPage.users
 }
+export const getUsersFilter = (state: AppStateType) => {
+    return state.usersPage.filter
+}
 export const getPageSize = (state: AppStateType) => {
     return state.usersPage.pageSize
 }

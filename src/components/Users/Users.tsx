@@ -3,10 +3,12 @@ import s from "./user.module.css"
 import {UsersType} from "../../types/types";
 import {Paginator} from "../../assets/common/Paginator";
 import {EveryUser} from "./EveryUser";
+import {UsersSearchForm} from "./UsersSearchForm";
 
 export let Users: React.FC<UsersType> = props => {
     return (
         <>
+            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
             <Paginator
                 onPageHandler={props.onPageHandler}
                 pageSize={props.pageSize}
@@ -27,6 +29,7 @@ export let Users: React.FC<UsersType> = props => {
 
     )
 }
+
 
 
 

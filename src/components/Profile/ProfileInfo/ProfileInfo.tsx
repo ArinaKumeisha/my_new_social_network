@@ -1,14 +1,18 @@
-import React, {ChangeEvent} from 'react';
+import React, {useState} from 'react';
 import s from "./ProfileInfo.module.css"
 import Preloader from "../../preloader/preloader";
 import {ProfileType} from '../../../types/types';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 import avatar from "../../../assets/image/avatar.png";
 import phone from "../../../assets/image/city.jpg";
-import {Social} from './Social';
+import {Contacts} from './Contacts';
+import ProfileData from "./ProfileData/ProfileData";
+import ProfileDataForm from "./ProfileData/ProfileDataForm";
+
 
 const ProfileInfo: React.FC<ProfileType> = props => {
     const {profile, status, updateStatus, isOwner, savePhoto} = props
+    const [editMode, setEditeMode] = useState<boolean>(false)
     if (!profile) {
         return <Preloader/>
     }
@@ -16,7 +20,7 @@ const ProfileInfo: React.FC<ProfileType> = props => {
         if (e.target.files.length)
             savePhoto(e.target.files[0])
     }
-
+    let contacts: any = profile.contacts
     return (
         <>
             <img src={phone} className={s.item} alt={'phone'}/>
@@ -27,10 +31,13 @@ const ProfileInfo: React.FC<ProfileType> = props => {
                          className={s.info} alt={'photos'}
                     />
                     {isOwner &&
-                    <input type={'file'}
-                           onChange={onchangeImage}
-                           name={'ddd'}
-                    />}
+                    <label className={s.uploadFile}>
+                        <input type={'file'}
+                               onChange={onchangeImage}
+                               className={s.style}
+                        />
+                        upload photo
+                    </label>}
                     <ProfileStatusWithHooks
                         status={status}
                         updateStatus={updateStatus}
@@ -40,15 +47,21 @@ const ProfileInfo: React.FC<ProfileType> = props => {
                 <div className={s.descriptionBlock}>
 
                     <div className={s.description}>
-                        <h3>Обо мне</h3>
-                        <Social profile={profile}/>
+                        {editMode? <ProfileDataForm profile={profile} isOwner={isOwner}/> :
+                            <ProfileData profile={profile} isOwner={isOwner}
+                                         activateEditeMode={()=> setEditeMode(true)}/>}
+
+                        <h3>Contacts:</h3>
+                        {Object.keys(contacts).map(c => {
+                            return <Contacts key={c} contactTitle={c} contactValue={contacts[c]}/>
+                        })}
                     </div>
                 </div>
-
             </div>
         </>
     )
 }
+
 
 export default ProfileInfo;
 

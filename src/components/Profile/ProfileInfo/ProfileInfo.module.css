@@ -24,14 +24,19 @@
     color: #f1ecec;
 }
 
-.contacts {
+.information {
     display: flex;
     flex-direction: column;
     padding: 10px;
     align-items: flex-start;
 }
-.contacts i, a {
+.information  a {
     margin-left:  20px;
+    color: white;
+}
+.information i {
+    margin-left:  20px;
+    color: #ddd8d8;
 }
 
 .block {
@@ -39,4 +44,18 @@
     justify-content: space-between;
     width: 90%;
     margin:20px 20px;
+}
+.uploadFile {
+    cursor: pointer;
+    border: 1px solid;
+    display: contents;
+   color: white;
+    font-size: 20px;
+}
+
+.style{
+    opacity: 0;
+}
+.status{
+    color: white;
 }

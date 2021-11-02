@@ -1,4 +1,6 @@
 //profile
+import {FilterType} from "../redux/users-reducer";
+
 export type PostsType = {
     id: number
     message: string
@@ -73,4 +75,5 @@ export type UsersType = {
     unFollow: (userID: number) => void,
     onPageHandler: (pageNumber: number) => void
     followingInProgress: number[]
+    onFilterChanged: (filter: FilterType)=> void
 }

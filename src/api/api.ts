@@ -28,8 +28,8 @@ export type AuthMeType= {
     login: string
 }
 export const usersAPI = {
-    getUsers: (currentPage: number = 10, pageSize: number = 100) => {
-        return instance.get<ResponseUserType<UserType[]>>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers: (currentPage: number = 10, pageSize: number = 100, term: string='', friend: boolean| null=null) => {
+        return instance.get<ResponseUserType<UserType[]>>(`users?page=${currentPage}&count=${pageSize}&term=${term}`+ (friend !==null ? `&friend=${friend}` : ''))
             .then(response => {
                 return response.data
             })

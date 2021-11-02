@@ -1,0 +1,8 @@
+.info {
+    margin-left:  20px;
+    color: white;
+}
+.info i, b {
+    margin-left:  20px;
+    color: #ddd8d8;
+}

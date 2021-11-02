@@ -9,16 +9,23 @@ export type UsersActionType = FollowAT |
     SetCurrentPageAT |
     SetTotalUserCountAT |
     ToggleIsFetchingAT |
-    ToggleIsFollowingProgressAT
+    ToggleIsFollowingProgressAT |
+    SetFilterAT
+
 
 type InitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 export const initialState = {
     users: [] as UserType[],
     pageSize: 10,   // количество userov на одной странице
     totalUsersCount: 20,  // сколько всего пользователей
     currentPage: 1,   // текущая страница которую просматриваем
     isFetching: false,
-    followingInProgress: [] as number[] //id пользователей
+    followingInProgress: [] as number[],//id пользователей
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 export const usersReducer = (state = initialState, action: UsersActionType): InitialStateType => {
@@ -48,6 +55,9 @@ export const usersReducer = (state = initialState, action: UsersActionType): Ini
                     ? [...state.followingInProgress, action.userId] :
                     state.followingInProgress.filter(id => id !== action.userId)
             }
+        }
+        case ACTION_TYPE.SET_FILTER: {
+            return {...state, filter: action.filter}
         }
         default:
             return state
@@ -85,6 +95,11 @@ type ToggleIsFollowingProgressAT = {
     userId: number
     isFetching: boolean
 }
+type SetFilterAT = {
+    type: ACTION_TYPE.SET_FILTER,
+        filter: FilterType
+}
+
 export const followSucces = (userID: number): FollowAT => {    // функции AC
     return {
         type: ACTION_TYPE.FOLLOW_SUCCES,
@@ -130,16 +145,23 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): 
     } as const
 }
 
-export const requestUsers = (page: number, pageSize: number) => async (dispatch: Dispatch<UsersActionType>) => {
-    dispatch(setCurrentPage(page))
-    dispatch(toggleIsFetching(true))
-    try {
-        const data = await usersAPI.getUsers(page, pageSize)
+export const setFilterAC = (filter: FilterType): SetFilterAT => {
+    return {
+        type: ACTION_TYPE.SET_FILTER,
+       filter,
+    }as const
+}
+
+export const requestUsers = (page: number, pageSize: number, filter: FilterType) => {
+    return async (dispatch: Dispatch<UsersActionType>) => {
+        dispatch(setCurrentPage(page))
+        dispatch(toggleIsFetching(true))
+        dispatch(setFilterAC(filter))
+        const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
         dispatch(toggleIsFetching(false))
         dispatch(setUsers(data.items))
         dispatch(setTotalUserCount(data.totalCount))
-    } catch (e) {
-        throw  Error
+
     }
 }
 
