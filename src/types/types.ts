@@ -1,5 +1,6 @@
 //profile
 import {FilterType} from "../redux/users-reducer";
+import {SaveProfileType} from "../redux/profile-reducer";
 
 export type PostsType = {
     id: number
@@ -8,12 +9,13 @@ export type PostsType = {
     img: string
 }
 export type ProfilesType = {
-    userId: number
+    userId: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: ContactsType
+    contacts: ContactsType|null
     photos: PhotosType
+    aboutMe: ''
 }
 export type ProfileType = {
     profile: ProfilesType | null
@@ -21,6 +23,9 @@ export type ProfileType = {
     updateStatus: (status: string) => void
     isOwner: boolean
     savePhoto: (photos: PhotosType) => void
+    userId: string
+    saveProfile: (profile: ProfilesType) => void
+    error: string | null
 }
 export type PhotosType = {
     small: string | null

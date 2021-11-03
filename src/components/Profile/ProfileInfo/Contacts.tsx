@@ -9,8 +9,10 @@ type PropsType = {
 export const Contacts: React.FC<PropsType> = props => {
     return (
         <div className={s.information}>
-            <div><b> {props.contactTitle}:
-                {props.contactValue ? props.contactValue :
+            <div>
+                <b> {props.contactTitle}:
+                {props.contactValue ?
+                    <span>{props.contactValue}</span> :
                     <i>no information</i>}</b></div>
 
         </div>

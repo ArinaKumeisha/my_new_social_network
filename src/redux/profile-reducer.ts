@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
-import {PhotosType, PostsType, ProfilesType} from "../types/types";
+import {ContactsType, PhotosType, PostsType, ProfilesType} from "../types/types";
+import {AppThunk} from "./redux_store";
 
 export enum ACTION_TYPE {
     ADD_POST = "PROFILE/ADD-POST",
@@ -19,6 +20,8 @@ export enum ACTION_TYPE {
     GET_USER_DATA_SUCCESS = "AUTH/ACTION_TYPE.GET_USER_DATA_SUCCESS",
     INITIALIZED_SUCCESS = "APP/INITIALIZED-SUCCESS",
     SAVE_PHOTO = "PROFILE/SAVE-PHOTO",
+    SET_ERROR="PROFILE/SET-ERROR"
+
 
 }
 
@@ -28,7 +31,9 @@ export type ProfileActionType =
     setUserProfileSuccessAT |
     SetStatusAT |
     DeletePostAT |
-    SavePhotoAT
+    SavePhotoAT |
+    SetErrorAT
+
 
 export type InitialStateType = typeof initialState
 
@@ -50,6 +55,7 @@ let initialState = {
             img: "https://www.fotoprizer.ru/img_inf/st_221.jpg"
         },
     ] as Array<PostsType>,
+    error: null as null | string
 }
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionType): InitialStateType => {
     switch (action.type) {
@@ -82,7 +88,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
                 return {...state, profile: {...state.profile, photos: action.photos}}
             }
             return {...state}
-
+        case ACTION_TYPE.SET_ERROR:
+            return {...state, error: action.error}
         default:
             return state
     }
@@ -99,6 +106,7 @@ export type SetStatusAT = {
     type: ACTION_TYPE.SET_STATUS,
     status: string,
 }
+export type SetErrorAT = ReturnType<typeof setError>
 
 export const addPostAC = (newMessagePost: string): AddPostAT => {
     return {
@@ -126,6 +134,9 @@ export const setUserProfileSuccess = (profile: ProfilesType) => {
         profile,
     } as const
 }
+export const setError=(error: string | null)=>{
+    return ({type:ACTION_TYPE.SET_ERROR, error} as const)
+}
 
 export const getUserStatus = (userId: string) => async (dispatch: Dispatch<ProfileActionType>) => {
     try {
@@ -150,6 +161,8 @@ export const setUserProfile = (userId: string) => async (dispatch: Dispatch<Prof
         throw  Error
     }
 }
+
+
 export const updateStatus = (status: string) => {
     return async (dispatch: Dispatch<ProfileActionType>) => {
         try {
@@ -157,8 +170,8 @@ export const updateStatus = (status: string) => {
             if (response.data.resultCode === 0) {
                 dispatch(setStatusAC(status))
             }
-        } catch (error) {
-            throw  Error
+        } catch (error: any) {
+            console.log(error.message)
         }
     }
 }
@@ -174,8 +187,27 @@ export const savePhoto = (photos: PhotosType) => {
         }
     }
 }
-
-
-
+export type SaveProfileType = {
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    aboutMe: string
+    contacts: ContactsType
+}
+export const saveProfile = (profile: ProfilesType): AppThunk => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.id
+        try {
+            const response = await profileAPI.saveProfile(profile)
+            if(response.data.resultCode === 0) {
+                dispatch(setUserProfile(userId))
+            }else{
+                dispatch(setError(response.data.messages[0]))
+            }
+        } catch (e: any) {
+            console.log(e.message)
+        }
+    }
+}
 
 

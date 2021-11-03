@@ -1,5 +1,6 @@
 import {PhotosType, ProfilesType, UserType} from "../types/types";
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
+import {SaveProfileType} from "../redux/profile-reducer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -69,11 +70,14 @@ export const profileAPI = {
     savePhoto(photoFile: any) {
         let formData = new FormData();
         formData.append('image', photoFile);
-       return instance.put<CommonType<{photos:PhotosType }>>(`profile/photo`,formData,  {
-           headers: {
-               'Content-Type': 'multipart/form-data'
-           }
-       })
+        return instance.put<CommonType<{ photos: PhotosType }>>(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    },
+    saveProfile(profile: ProfilesType) {
+        return instance.put<CommonType<{profile: ProfilesType}>>(`profile`, profile)
     }
 }
 

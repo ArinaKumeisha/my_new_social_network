@@ -53,3 +53,6 @@ export const getUsersSuper = createSelector(
     getUsers, (users) => {                                        // из библиотеки reselect!
         return users.filter(u => true)
     })
+export const getError = (state: AppStateType)=>{
+    return state.profilePage.error
+}

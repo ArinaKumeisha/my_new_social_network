@@ -9,7 +9,7 @@ type StateType = {
     status: string
 }
 
-export class ProfileStatus extends React.Component<ProfileStatusType,StateType> {
+export class ProfileStatus extends React.Component<ProfileStatusType, StateType> {
     state = {
         editMode: false,
         status: this.props.status,
