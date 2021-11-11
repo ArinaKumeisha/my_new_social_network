@@ -13,6 +13,7 @@ import {inicializedApp} from './redux/app-reducer'
 import {Route} from 'react-router';
 import {connect, ConnectedProps} from 'react-redux';
 import {WithSuspense} from "./hoc/WithSuspense";
+import {LoginFormik} from "./components/Login/LoginFormik";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -42,7 +43,7 @@ class App extends React.Component<ConectedType> {
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
                     <Route path="/friends" render={() => <div>f</div>}/>
-                    <Route path="/login" component={Login}/>
+                    <Route path="/login" component={LoginFormik}/>
                 </div>
             </div>)
     }

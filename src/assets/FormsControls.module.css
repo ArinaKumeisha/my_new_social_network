@@ -7,13 +7,17 @@
 .formControl.error textarea,
 .formControl.error input {
     border: solid 4px red;
-
 }
 .formControl.error span {
     color: #9c1717;
     font-weight: bold;
 }
 
-.comonError {
-    border: solid 4px red;
+.commonsError {
+    color: rgba(214, 41, 7, 0.94);
+    background-color: #a09494;
+    width: 150px;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 20px;
 }

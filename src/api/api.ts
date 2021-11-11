@@ -10,27 +10,27 @@ const instance = axios.create({
     }
 });
 
-export type ResponseUserType<T={}> = {
+export type ResponseUserType<T = {}> = {
     items: T
     totalCount: number
     error: number
 }
 
-export type CommonType<T={}> = {
+export type CommonType<T = {}> = {
     resultCode: number
     messages: string[],
     data: T
 }
 
 
-export type AuthMeType= {
+export type AuthMeType = {
     id: string
     email: string
     login: string
 }
 export const usersAPI = {
-    getUsers: (currentPage: number = 10, pageSize: number = 100, term: string='', friend: boolean| null=null) => {
-        return instance.get<ResponseUserType<UserType[]>>(`users?page=${currentPage}&count=${pageSize}&term=${term}`+ (friend !==null ? `&friend=${friend}` : ''))
+    getUsers: (currentPage: number = 10, pageSize: number = 100, term: string = '', friend: boolean | null = null) => {
+        return instance.get<ResponseUserType<UserType[]>>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend !== null ? `&friend=${friend}` : ''))
             .then(response => {
                 return response.data
             })
@@ -47,11 +47,11 @@ export const authAPI = {
     me() {
         return instance.get<CommonType<AuthMeType>>(`auth/me`, {})
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post<CommonType<{userId: number}>>(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
+        return instance.post<CommonType<{ userId: number }>>(`auth/login`, {email, password, rememberMe, captcha})
     },
     logOut() {
-        return instance.delete<CommonType>(`auth/login`,{})
+        return instance.delete<CommonType>(`auth/login`, {})
     }
 
 }
@@ -77,13 +77,16 @@ export const profileAPI = {
         })
     },
     saveProfile(profile: ProfilesType) {
-        return instance.put<CommonType<{profile: ProfilesType}>>(`profile`, profile)
+        return instance.put<CommonType<{ profile: ProfilesType }>>(`profile`, profile)
     }
 }
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get<any>(`security/get-captcha-url`)
+    }
 
 
-
-
+}
 
 
 

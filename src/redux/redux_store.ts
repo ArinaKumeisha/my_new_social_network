@@ -15,7 +15,6 @@ import {AppActionsReducerType, appReducer} from "./app-reducer";
     ReturnType<typeof sendMessageAC>*/
 
 
-
 let rootReducer = combineReducers({              //rootReducer возвращает state
     profilePage: profileReducer,  //это наш целый стэйт
     dialogsPage: dialogsReducer,  // ключ: значение
@@ -41,7 +40,7 @@ export type AppActionsType =
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose   //подключили redux vtool
-export let store = createStore(rootReducer,composeEnhancers( applyMiddleware(thunkMiddleWare)))
+export let store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleWare)))
 //@ts-ignore
 window.store = store
 
