@@ -46,8 +46,7 @@ const ProfileDataForm = (props: PropsType) => {
                     fullName: '',
                     lookingForAJobDescription: '',
                     lookingForAJob: false,
-                    aboutMe: '',
-                    userId: props.userId,
+                    aboutMe: '', userId: props.userId,
                     contacts: {
                         facebook: '',
                         youtube: '',

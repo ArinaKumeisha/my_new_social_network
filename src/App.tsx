@@ -23,6 +23,7 @@ class App extends React.Component<ConectedType> {
     componentDidMount() {
         this.props.inicializedApp()
     }
+
     render() {
         if (!this.props.inicialized) {
             return <Preloader/>
@@ -33,18 +34,18 @@ class App extends React.Component<ConectedType> {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Switch>
-                        <Route exact path="/" render={() =><ProfileContainer/>}/>
-                    <Route exact path="/profile" render={() =><ProfileContainer/>}/>
-                    <Route path="/dialogs"
-                           render={WithSuspense(DialogsContainer)}/>
-                    <Route path="/users" render={() =>
-                        <UsersContainer/>}/>
-                    <Route path="/new" render={() => <NewForm/>}/>
-                    <Route path="/music" component={Music}/>
-                    <Route path="/settings" component={Settings}/>
-                    <Route path="/friends" render={() => <div>Friends</div>}/>
-                    <Route path="/login" component={LoginFormik}/>
-                    <Route path="*" render={() => <h2 style={{color:'red'}}>404 PAGE NOT FOUND</h2>}/>
+                        <Route exact path="/" render={() => <ProfileContainer/>}/>
+                        <Route path="/profile/:userId?" render={WithSuspense(ProfileContainer)}/>
+                        <Route path="/dialogs"
+                               render={WithSuspense(DialogsContainer)}/>
+                        <Route path="/users" render={() =>
+                            <UsersContainer/>}/>
+                        <Route path="/new" render={() => <NewForm/>}/>
+                        <Route path="/music" component={Music}/>
+                        <Route path="/settings" component={Settings}/>
+                        <Route path="/friends" render={() => <div>Friends</div>}/>
+                        <Route path="/login" component={LoginFormik}/>
+                        <Route path="*" render={() => <h2 style={{color: 'red'}}>404 PAGE NOT FOUND</h2>}/>
                     </Switch>
                 </div>
             </div>)
